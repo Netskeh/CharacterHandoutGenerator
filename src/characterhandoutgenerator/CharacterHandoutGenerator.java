@@ -34,10 +34,10 @@ public class CharacterHandoutGenerator extends Application {
     public void start(Stage primaryStage) {    
         db = SQLite.getInstance();
         GameType gt = new GameType("Black Crusade");
-        db.addGame(gt);
+        /*db.addGame(gt);
         db.switchToGame(gt);
         db.createTable("Talents");
-        createInterface(primaryStage);
+        createInterface(primaryStage);*/
     }
 
     public static void main(String[] args) {
