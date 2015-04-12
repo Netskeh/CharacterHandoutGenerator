@@ -36,8 +36,8 @@ public class CharacterHandoutGenerator extends Application {
         GameType gt = new GameType("Black Crusade");
         /*db.addGame(gt);
         db.switchToGame(gt);
-        db.createTable("Talents");
-        createInterface(primaryStage);*/
+        db.createTable("Talents");*/
+        createInterface(primaryStage);
     }
 
     public static void main(String[] args) {

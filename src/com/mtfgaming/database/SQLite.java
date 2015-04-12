@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -99,6 +101,22 @@ public class SQLite implements I_DatabaseHandler {
         }
     }
     
+    @Override
+    public List<String> getGames() {
+        List<String> list = new ArrayList<String>();
+        String sql = "SELECT * FROM " + GAME_TYPES_INDEX_TABLE + ";";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while ( rs.next() ) {
+                list.add(rs.getString("KEY"));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     @Override
     public void insert(String table, String key, String entry) {
@@ -139,7 +157,6 @@ public class SQLite implements I_DatabaseHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -159,7 +176,6 @@ public class SQLite implements I_DatabaseHandler {
             e.printStackTrace();
         }
         return result;
-
     }
 
     @Override
@@ -172,9 +188,8 @@ public class SQLite implements I_DatabaseHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-
+    
     @Override
     public void removeTable(String name) {
         String sql = "DROP TABLE " + this.gameTypePrefix + name + ";"; 

@@ -4,6 +4,7 @@
 package com.mtfgaming.database;
 
 import com.mtfgaming.model.GameType;
+import java.util.List;
 
 public interface I_DatabaseHandler {
 
@@ -16,6 +17,7 @@ public interface I_DatabaseHandler {
         public boolean switchToGame(GameType gt);
         public void addGame(GameType gt);
         public void deleteGame(GameType gt);
+        public List<String> getGames();
 	
 	public void insert(String table, String key, String entry);
 	public void delete(String table, String key);
