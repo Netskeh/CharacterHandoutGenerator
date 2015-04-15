@@ -6,7 +6,9 @@ package characterhandoutgenerator;
 import com.mtfgaming.model.Character;
 import com.mtfgaming.model.CharacterType;
 import com.mtfgaming.model.GameType;
+import com.mtfgaming.utils.FileInputOutput;
 import java.io.File;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -42,8 +44,11 @@ public class CharacterHandoutGenerator extends Application {
         
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        GameType gt = new GameType();
+        this.primaryStage = primaryStage;        
+        
+        FileInputOutput fio = new FileInputOutput();
+        
+        /*GameType gt = new GameType();
         gt.setName("Black Crusade");
         gt.addTable("Talents");
         gt.addEntry("Talents", "first", "desc");
@@ -60,9 +65,11 @@ public class CharacterHandoutGenerator extends Application {
         ch.setStat("Weapon Skill", 50);
         gt.addCharacter(ch);
         
+        fio.saveGameTypeDataToFile(gt);*/
+        
         createInterface();
         
-        this.saveGameTypeDataToFile(gt);
+        List<GameType> list = fio.loadGameTypeDataFromFile();
         
     }
 
@@ -112,53 +119,5 @@ public class CharacterHandoutGenerator extends Application {
         
     }
     
-    
-    public void loadGameTypeDataFromFile(GameType gt) {
-        try {
-            JAXBContext context = JAXBContext
-                    .newInstance(GameType.class);
-            Unmarshaller um = context.createUnmarshaller();
-
-            // Reading XML from the file and unmarshalling.
-            GameType gtnew = (GameType) um.unmarshal(this.getFilePath(gt.getFileName()));
-
-        } catch (Exception e) { // catches ANY exception
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not load data");
-            alert.setContentText("Could not load data from file");
-
-            alert.showAndWait();
-        }
-    }
-
-    public void saveGameTypeDataToFile(GameType gt) {
-            JAXBContext context;
-        try {
-            context = JAXBContext.newInstance(GameType.class);
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            // Marshalling and saving XML to the file.
-            m.marshal(gt, getFilePath(gt.getFileName()));
-        } catch (JAXBException ex) {
-            Logger.getLogger(CharacterHandoutGenerator.class.getName()).log(Level.SEVERE, null, ex);
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not save data");
-            alert.setContentText("Could not save data to file");
-
-            alert.showAndWait();
-        } 
-    }
-    
-    public File getFilePath(String name) {
-        String filePath = System.getProperty("user.dir") + "\\" + name + ".xml";
-        if (filePath != null) {
-            return new File(filePath);
-        } else {
-            return null;
-        }
-    }
     
 }

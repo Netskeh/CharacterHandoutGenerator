@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  */
 public class MainScreenController implements Initializable {
 
-    /**
+    /*
      * Initializes the controller class.
      */
     @Override
