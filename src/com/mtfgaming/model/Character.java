@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -18,8 +19,10 @@ public class Character {
     
     private String name;
     private String characterTypeName;
+    @XmlTransient
     private CharacterType characterType;
     private String gameTypeName;
+    @XmlTransient
     private GameType gameType;
     private final Map<String,Integer> stats = new HashMap();
     private final Set<String> talents = new TreeSet();
@@ -40,6 +43,7 @@ public class Character {
         this.gameType = gt;
     }
     
+    @XmlTransient
     public GameType getGameType() {
         if (gameType == null) {
             this.setGameType(gameTypeName);
@@ -75,6 +79,7 @@ public class Character {
         this.setCharacterType(this.getGameType().getCharacterType(type));
     }
     
+    @XmlTransient
     public CharacterType getCharacterType() {
         if (characterType == null) {
             this.setCharacterType(characterTypeName);
