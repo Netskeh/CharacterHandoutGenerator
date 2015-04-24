@@ -4,6 +4,7 @@
 package com.mtfgaming.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.TreeMap;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Netsky
  */
 @XmlRootElement(name = "GameType")
-public class GameType {
+public class GameType implements Comparator<GameType> {
     
     private String name;
     private String fileName;
@@ -123,6 +124,11 @@ public class GameType {
     @XmlElement
     public List<Character> getCharacter() {
         return character;
+    }
+
+    @Override
+    public int compare(GameType gt1, GameType gt2) {
+        return gt1.getName().compareTo(gt2.getName());
     }
     
     

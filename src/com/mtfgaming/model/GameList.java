@@ -4,6 +4,7 @@
 package com.mtfgaming.model;
 
 import com.mtfgaming.utils.FileInputOutput;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class GameList {
     private GameList() {
         FileInputOutput fio = new FileInputOutput();
         list = fio.loadGameTypeDataFromFile();
+        Collections.sort(list, new GameType());
     }
     
     public static GameList getInstance() {
