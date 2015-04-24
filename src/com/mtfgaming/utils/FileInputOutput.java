@@ -3,7 +3,6 @@
  */
 package com.mtfgaming.utils;
 
-import characterhandoutgenerator.CharacterHandoutGenerator;
 import com.mtfgaming.model.GameType;
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +34,6 @@ public class FileInputOutput {
             Files.walk(Paths.get(this.getFilePath())).forEach(filePath -> {
                 if (Files.isRegularFile(filePath) && Files.isReadable(filePath)) {
                     try {
-                        System.out.println(filePath);
                         list.add((GameType) um.unmarshal(filePath.toFile()));
                     } catch (JAXBException ex) {
                         Logger.getLogger(FileInputOutput.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,7 +65,7 @@ public class FileInputOutput {
             // Marshalling and saving XML to the file.
             m.marshal(gt, getFilePath(gt.getFileName()));
         } catch (JAXBException ex) {
-            Logger.getLogger(CharacterHandoutGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileInputOutput.class.getName()).log(Level.SEVERE, null, ex);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Could not save data");
