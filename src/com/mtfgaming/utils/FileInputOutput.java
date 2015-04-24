@@ -54,6 +54,11 @@ public class FileInputOutput {
         }
         return list;
     }
+    
+    public void deleteGameTypeData(GameType gt) {
+        File toDelete = this.getFilePath(gt.getFileName());
+        toDelete.delete();
+    }
 
     public void saveGameTypeDataToFile(GameType gt) {
             JAXBContext context;
