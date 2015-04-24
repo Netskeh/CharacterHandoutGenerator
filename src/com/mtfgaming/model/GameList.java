@@ -15,9 +15,10 @@ public class GameList {
     
     private static GameList gl;
     private final List<GameType> list;
+    private final FileInputOutput fio;
     
     private GameList() {
-        FileInputOutput fio = new FileInputOutput();
+        fio = new FileInputOutput();
         list = fio.loadGameTypeDataFromFile();
         Collections.sort(list, new GameType());
     }
@@ -35,10 +36,12 @@ public class GameList {
     
     public void addGame(GameType gt) {
         list.add(gt);
+        fio.saveGameTypeDataToFile(gt);
     }
     
     public void removeGame(GameType gt) {
         list.remove(gt);
+        fio.deleteGameTypeData(gt);
     }
     
     public GameType getGame(String str) {
