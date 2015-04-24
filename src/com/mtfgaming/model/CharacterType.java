@@ -19,6 +19,7 @@ public class CharacterType {
     private String name;
     private final Set<String> talents = new TreeSet();
     private final Map<String,Integer> stats = new HashMap();
+    private String text;
 
     
     @XmlElement
@@ -58,7 +59,14 @@ public class CharacterType {
         }
     }
        
-    
+    @XmlElement
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
     
     
 }
