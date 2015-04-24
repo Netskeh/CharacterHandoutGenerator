@@ -3,7 +3,9 @@
  */
 package com.mtfgaming.model;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeSet;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,17 +17,17 @@ import javax.xml.bind.annotation.XmlElement;
 public class CharacterType {
     
     private String name;
-    private final Set<String> talents = new HashSet();
-    private final Set<String> stats = new HashSet();
+    private final Set<String> talents = new TreeSet();
+    private final Map<String,Integer> stats = new HashMap();
 
     
     @XmlElement
-    public Set<String> getStats() {
+    public Map<String,Integer> getStats() {
         return stats;
     }
     
-    public void addStat(String name) {
-        stats.add(name);
+    public void addStat(String name,int value) {
+        stats.put(name, value);
     }
     
     public void removeStat(String name) {
