@@ -17,32 +17,52 @@ import javax.xml.bind.annotation.XmlElement;
 public class Character {
     
     private String name;
-    private String characterType;
-    private String gameType;
+    private String characterTypeName;
+    private CharacterType characterType;
+    private String gameTypeName;
+    private GameType gameType;
     private final Map<String,Integer> stats = new HashMap();
     private final Set<String> talents = new TreeSet();
+    private String text;
     
     
     @XmlElement
-    public String getGameType() {
-        return gameType;
+    public String getGameTypeName() {
+        return gameTypeName;
     }
 
-    public void setGameType(String str) {
-        this.gameType = str;
+    private void setGameTypeName(String str) {
+        this.gameTypeName = str;
+    }
+    
+    public void setGameType(GameType gt) {
+        this.setGameTypeName(gt.getName());
+        this.gameType = gt;
+    }
+    
+    public GameType getGameType() {
+        if (gameType == null) {
+            this.setGameType(gameTypeName);
+        }
+        return gameType;
+    }
+    
+    public void setGameType(String gt) {
+        this.setGameType(GameList.getInstance().getGame(gt));
     }
     
     @XmlElement
-    public String getCharacterType() {
-        return characterType;
+    public String getCharacterTypeName() {
+        return characterTypeName;
     }
     
-    private void setCharacterType(String type) {
-        this.characterType = type;
+    private void setCharacterTypeName(String type) {
+        this.characterTypeName = type;
     }
 
     public void setCharacterType(CharacterType type) {
-        this.setCharacterType(type.getName());
+        this.setCharacterTypeName(type.getName());
+        this.characterType = type;
         
         Set<String> oldKeysDel = this.stats.keySet();
         oldKeysDel.removeAll(type.getStats().keySet());
@@ -50,7 +70,18 @@ public class Character {
         oldKeysDel.stream().forEach((str) -> stats.remove(str));
         type.getStats().forEach((str, value) -> stats.putIfAbsent(str,value));
     }
-
+    
+    public void setCharacterType(String type) {
+        this.setCharacterType(this.getGameType().getCharacterType(type));
+    }
+    
+    public CharacterType getCharacterType() {
+        if (characterType == null) {
+            this.setCharacterType(characterTypeName);
+        }
+        return characterType;
+    }
+    
     @XmlAttribute
     public String getName() {
         return name;
@@ -68,7 +99,7 @@ public class Character {
     public Set<String> getTalents() {
         Set<String> allTalents = new TreeSet();
         allTalents.addAll(getOwnTalents());
-        allTalents.addAll(GameList.getInstance().getGame(gameType).getCharacterType(characterType).getTalents());
+        allTalents.addAll(characterType.getTalents());
         return allTalents;
     }
     
@@ -91,6 +122,19 @@ public class Character {
     
     public void setStat(String name, int value) {
         stats.put(name, value);
+    }
+    
+    @XmlElement
+    public String getOwnText() {
+        return text;
+    }
+    
+    public String getText() {
+        return text + "\n" + characterType.getText();
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
     
     
