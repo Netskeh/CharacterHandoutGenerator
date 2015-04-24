@@ -3,7 +3,7 @@
  */
 package com.mtfgaming.model;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlElement;
 public class LookUpTable {
     
     private String name;
-    private final Map<String,String> table = new HashMap();
+    private final Map<String,String> table = new TreeMap();
 
     @XmlAttribute
     public String getName() {
