@@ -4,9 +4,9 @@
 package com.mtfgaming.model;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -17,30 +17,38 @@ import javax.xml.bind.annotation.XmlElement;
 public class Character {
     
     private String name;
-    private String type;
+    private String characterType;
+    private String gameType;
     private final Map<String,Integer> stats = new HashMap();
-    private final Set<String> talents = new HashSet();
-    private final Set<String> abilities = new HashSet();
+    private final Set<String> talents = new TreeSet();
     
-
+    
     @XmlElement
-    public String getType() {
-        return type;
+    public String getGameType() {
+        return gameType;
     }
 
-    public void setType(CharacterType type) {
-        this.type = type.getName();
+    public void setGameType(String str) {
+        this.gameType = str;
+    }
+    
+    @XmlElement
+    public String getCharacterType() {
+        return characterType;
+    }
+    
+    private void setCharacterType(String type) {
+        this.characterType = type;
+    }
+
+    public void setCharacterType(CharacterType type) {
+        this.setCharacterType(type.getName());
         
         Set<String> oldKeysDel = this.stats.keySet();
-        oldKeysDel.removeAll(type.getStats());
+        oldKeysDel.removeAll(type.getStats().keySet());
 
-        for(String str : oldKeysDel) {
-            stats.remove(str);
-        }
-        
-        for(String str : type.getStats()) {
-            stats.putIfAbsent(str,0);
-        }
+        oldKeysDel.stream().forEach((str) -> stats.remove(str));
+        type.getStats().forEach((str, value) -> stats.putIfAbsent(str,value));
     }
 
     @XmlAttribute
@@ -53,8 +61,15 @@ public class Character {
     }
     
     @XmlElement
-    public Set<String> getTalents() {
+    public Set<String> getOwnTalents() {
         return talents;
+    }
+    
+    public Set<String> getTalents() {
+        Set<String> allTalents = new TreeSet();
+        allTalents.addAll(getOwnTalents());
+        allTalents.addAll(GameList.getInstance().getGame(gameType).getCharacterType(characterType).getTalents());
+        return allTalents;
     }
     
     public void addTalent(String entry) {
@@ -76,19 +91,6 @@ public class Character {
     
     public void setStat(String name, int value) {
         stats.put(name, value);
-    }
-    
-    @XmlElement
-    public Set<String> getAbilities() {
-        return abilities;
-    }
-    
-    public void addAbility(String entry) {
-        abilities.add(entry);
-    }
-    
-    public void removeAbility(String entry) {
-        abilities.remove(entry);
     }
     
     
