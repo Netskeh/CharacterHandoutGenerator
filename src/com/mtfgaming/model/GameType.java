@@ -4,7 +4,7 @@
 package com.mtfgaming.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class GameType {
     
     private String name;
     private String fileName;
-    private final Map<String,LookUpTable> tables = new HashMap();
+    private final Map<String,LookUpTable> tables = new TreeMap();
     private final Set<CharacterType> characterTypes = new HashSet();
     private final List<Character> character = new ArrayList();
     
@@ -86,7 +86,7 @@ public class GameType {
     }
 
     public void addCharacterType(CharacterType ct) {
-        this.characterTypes.add(ct);
+        this.characterTypes.add(ct);     
     }
     
     public void removeCharacterType(CharacterType ct) {
@@ -98,7 +98,17 @@ public class GameType {
         return characterTypes;
     }
     
+    public CharacterType getCharacterType(String type) {
+        for (CharacterType ct : characterTypes) {
+            if (type.equals(ct.getName())) {
+                return ct;
+            }
+        }
+        return null;
+    }
+    
     public void addCharacter(Character c) {
+        c.setGameType(this.getName());
         this.character.add(c);
     }
     
