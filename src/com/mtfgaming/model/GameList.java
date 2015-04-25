@@ -36,7 +36,7 @@ public class GameList {
     
     public void addGame(GameType gt) {
         list.add(gt);
-        fio.saveGameTypeDataToFile(gt);
+        this.saveGame(gt);
     }
     
     public void removeGame(GameType gt) {
@@ -51,6 +51,14 @@ public class GameList {
             }
         }
         return null;
+    }
+    
+    public void saveGame(String name) {
+        fio.saveGameTypeDataToFile(this.getGame(name));
+    }
+    
+    public void saveGame(GameType gt) {
+        fio.saveGameTypeDataToFile(gt);
     }
     
 }
