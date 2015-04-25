@@ -8,7 +8,7 @@
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <ListView fx:id="gameTypeList" layoutX="-26.0" layoutY="29.0" onMouseClicked="#handleSelection" prefHeight="769.0" prefWidth="125.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+            <ListView fx:id="gameTypeList" layoutX="-26.0" layoutY="29.0" onMouseClicked="#handleGTSelection" prefHeight="769.0" prefWidth="125.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
                <contextMenu>
                   <ContextMenu>
                     <items>
@@ -30,7 +30,10 @@
                            <children>
                               <SplitPane dividerPositions="0.15" layoutY="6.0" prefHeight="1050.0" prefWidth="1723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <items>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <ListView layoutX="-15.0" prefHeight="767.0" prefWidth="169.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children></AnchorPane>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
                                  </items>
                               </SplitPane>
@@ -52,7 +55,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                <Tab closable="false" text="Talents">
+                <Tab closable="false" text="Tables">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -61,13 +64,14 @@
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
                                           <ListView layoutX="-15.0" layoutY="34.0" prefHeight="767.0" prefWidth="169.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <ListView fx:id="tableList" layoutX="-15.0" layoutY="35.0" onMouseClicked="#handleTableSelection" prefHeight="767.0" prefWidth="169.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children></AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <TableView prefHeight="767.0" prefWidth="970.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView fx:id="lookupTable" editable="true" prefHeight="767.0" prefWidth="970.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columns>
-                                              <TableColumn prefWidth="186.0" sortable="false" text="Name" />
-                                              <TableColumn prefWidth="782.0" sortable="false" text="Description" />
+                                              <TableColumn fx:id="tableName" onEditCommit="#handleTableEditCommit" onEditStart="#handleTableEditStart" prefWidth="186.0" sortable="false" text="Name" />
+                                              <TableColumn fx:id="tableDesc" onEditCommit="#handleTableEditCommit" onEditStart="#handleTableEditStart" prefWidth="782.0" sortable="false" text="Description" />
                                             </columns>
                                           </TableView>
                                        </children></AnchorPane>
