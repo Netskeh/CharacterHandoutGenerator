@@ -131,11 +131,11 @@ public class Character {
     
     @XmlElement
     public String getOwnText() {
-        return text;
+        return text == null ? " " : text;
     }
     
     public String getText() {
-        return text + "\n" + characterType.getText();
+        return getOwnText() + "\n" + characterType.getText();
     }
 
     public void setText(String text) {
