@@ -63,8 +63,15 @@
                                 <items>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <ListView layoutX="-15.0" layoutY="34.0" prefHeight="767.0" prefWidth="169.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <ListView fx:id="tableList" layoutX="-15.0" layoutY="35.0" onMouseClicked="#handleTableSelection" prefHeight="767.0" prefWidth="169.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <ListView fx:id="tableList" layoutX="-15.0" layoutY="35.0" onMouseClicked="#handleTableSelection" prefHeight="767.0" prefWidth="169.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <contextMenu>
+                                                <ContextMenu>
+                                                  <items>
+                                                    <MenuItem fx:id="addNewTable" mnemonicParsing="false" onAction="#handleTableAdd" text="Add New" />
+                                                      <MenuItem fx:id="deleteTable" mnemonicParsing="false" onAction="#handleTableDelete" text="Delete" />
+                                                  </items>
+                                                </ContextMenu>
+                                             </contextMenu></ListView>
                                        </children></AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>

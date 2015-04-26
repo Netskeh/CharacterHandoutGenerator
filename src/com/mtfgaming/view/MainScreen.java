@@ -27,7 +27,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.MapValueFactory;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -205,5 +204,38 @@ public class MainScreen extends ListView implements Initializable {
         return allData;
     }
     
+    @FXML 
+    public void handleTableAdd() {
+        TextInputDialog dialog = new TextInputDialog("New Table");
+        dialog.setTitle("New Table");
+        dialog.setHeaderText("Create a new Lookup Table");
+        dialog.setContentText("Please enter a new name:");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            gl.getGame(selectedGT).addTable(result.get());
+            obsListTables.add(result.get());
+            gl.saveGame(selectedGT);
+        }
+    }
+    
+    @FXML 
+    public void handleTableDelete() {
+        String item = tableList.getSelectionModel().getSelectedItem();
+        System.out.println(item);
+        System.out.println(selectedTable);
+        if(item != null && item.equals(selectedTable)) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Deleting " + item);
+            alert.setHeaderText("You are about to delete a Table");
+            alert.setContentText("Do you really want to delete " + item + "?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                obsListTables.remove(item);
+                gl.getGame(selectedGT).removeTable(item);
+                gl.saveGame(selectedGT);
+            }
+        }
+    }
     
 }
