@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  */
 public class CharacterHandoutGenerator extends Application {
     
-    public static Stage primaryStage;
+    Stage primaryStage;
     GameList gl = GameList.getInstance();
     
         
@@ -31,38 +31,8 @@ public class CharacterHandoutGenerator extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;        
         
-        //System.out.println(gl.getGame("White Crusade").getCharacter(0).getTalents());
-        /*FileInputOutput fio = new FileInputOutput();
-        
-        GameType gt = new GameType();
-        gt.setName("Brown Crusade");
-        gt.addTable("Talents");
-        gt.addEntry("Talents", "first", "desc");
-        gt.addEntry("Talents", "second", "descfgiusisg");
-        gl.addGame(gt);
-        
-        CharacterType ct = new CharacterType();
-        ct.setName("NPC");
-        ct.addStat("Weapon Skill",50);
-        ct.addTalent("Die Hard");
-        ct.addTalent("Leap Up");
-        gt.addCharacterType(ct);
-        
-        Character ch = new Character();
-        ch.setName("Belix");
-        ch.setCharacterType(ct);
-        ch.setStat("Weapon Skill", 50);
-        ch.addTalent("Bananaking");
-        ch.addTalent("Zynisch");
-        gt.addCharacter(ch);
-        
-        fio.saveGameTypeDataToFile(gt);*/
-        
+        this.createDummyData();
         createInterface();
-        
-        /*List<GameType> list = fio.loadGameTypeDataFromFile();
-        list.stream().forEach(gtle -> System.out.println(gtle));*/
-        //System.exit(0);
     }
 
     public static void main(String[] args) {
@@ -84,6 +54,36 @@ public class CharacterHandoutGenerator extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         
+    }
+    
+    private void createDummyData() {
+        FileInputOutput fio = new FileInputOutput();
+        
+        GameType gt = new GameType();
+        gt.setName("Brown Crusade");
+        gt.addTable("Talents");
+        gt.addEntry("Talents", "first", "desc");
+        gt.addEntry("Talents", "second", "descfgiusisg");
+        gl.addGame(gt);
+        
+        CharacterType ct = new CharacterType();
+        ct.setName("NPC");
+        ct.addStat("Weapon Skill",50);
+        ct.addTalent("Die Hard");
+        ct.addTalent("Leap Up");
+        ct.setText("BANAAN");
+        gt.addCharacterType(ct);
+        
+        Character ch = new Character();
+        ch.setName("Belix");
+        ch.setCharacterType(ct);
+        ch.setStat("Weapon Skill", 50);
+        ch.addTalent("Bananaking");
+        ch.addTalent("Zynisch");
+        ch.setText("Mister awesome");
+        gt.addCharacter(ch);
+        
+        fio.saveGameTypeDataToFile(gt);
     }
     
     
