@@ -142,6 +142,7 @@ public class GameType implements Comparator<GameType> {
             this.getTables().keySet().stream().forEach(str -> list.add(str));
             obsList = FXCollections.observableList(list);
         }
+        FXCollections.sort(obsList);
         return obsList;
     }
     

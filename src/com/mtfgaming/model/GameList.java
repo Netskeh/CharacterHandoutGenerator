@@ -73,6 +73,7 @@ public class GameList {
             getGameList().stream().forEach(item -> gameListNames.add(item.getName()));
             obsList = FXCollections.observableList(gameListNames);
         }
+        FXCollections.sort(obsList);
         return obsList;
     }
     

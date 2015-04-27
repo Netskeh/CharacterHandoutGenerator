@@ -75,12 +75,15 @@
                                        </children></AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <TableView fx:id="lookupTable" editable="true" prefHeight="767.0" prefWidth="970.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView fx:id="lookupTable" editable="true" prefHeight="720.0" prefWidth="970.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columns>
                                               <TableColumn fx:id="tableName" onEditCommit="#handleTableEditCommit" onEditStart="#handleTableEditStart" prefWidth="186.0" sortable="false" text="Name" />
                                               <TableColumn fx:id="tableDesc" onEditCommit="#handleTableEditCommit" onEditStart="#handleTableEditStart" prefWidth="782.0" sortable="false" text="Description" />
                                             </columns>
                                           </TableView>
+                                          <TextField fx:id="tableAddEntryKey" layoutX="7.0" layoutY="728.0" prefHeight="25.0" prefWidth="190.0" />
+                                          <TextField fx:id="tableAddEntryValue" layoutX="206.0" layoutY="728.0" prefHeight="25.0" prefWidth="673.0" />
+                                          <Button fx:id="tableAddEntryButton" layoutX="887.0" layoutY="728.0" mnemonicParsing="false" onAction="#handleTableAddEntry" text="Add Entry" />
                                        </children></AnchorPane>
                                 </items>
                               </SplitPane>

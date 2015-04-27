@@ -30,9 +30,10 @@ public class CharacterHandoutGenerator extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;        
-        
-        this.createDummyData();
+       
         createInterface();
+        
+        //this.createDummyData();
     }
 
     public static void main(String[] args) {
@@ -66,7 +67,7 @@ public class CharacterHandoutGenerator extends Application {
         gt.addEntry("Talents", "second", "descfgiusisg");
         gl.addGame(gt);
         
-        CharacterType ct = new CharacterType();
+        /*CharacterType ct = new CharacterType();
         ct.setName("NPC");
         ct.addStat("Weapon Skill",50);
         ct.addTalent("Die Hard");
@@ -81,7 +82,7 @@ public class CharacterHandoutGenerator extends Application {
         ch.addTalent("Bananaking");
         ch.addTalent("Zynisch");
         ch.setText("Mister awesome");
-        gt.addCharacter(ch);
+        gt.addCharacter(ch);*/
         
         fio.saveGameTypeDataToFile(gt);
     }

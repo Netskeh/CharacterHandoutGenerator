@@ -3,6 +3,7 @@
  */
 package com.mtfgaming.model;
 
+import java.util.Comparator;
 import java.util.TreeMap;
 import java.util.Map;
 import javafx.collections.FXCollections;
@@ -17,6 +18,8 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class LookUpTable {
     
+    public final static String TABLE_KEY = "Name";
+    public final static String TABLE_VALUE = "Desc";
     private String name;
     private final Map<String,String> table = new TreeMap();
     private ObservableList<Map> obsList;
@@ -37,10 +40,19 @@ public class LookUpTable {
 
     public void addEntry(String key, String description) {
         this.table.put(key, description);
+        Map<String, String> temp = new TreeMap<>();
+        temp.put(TABLE_KEY, key);
+        temp.put(TABLE_VALUE, description);
+        getObsList().add(temp);
     }
     
     public void removeEntry(String key) {
+        String desc = this.table.get(key);
         this.table.remove(key);
+        Map<String, String> temp = new TreeMap<>();
+        temp.put(TABLE_KEY, key);
+        temp.put(TABLE_VALUE, desc);
+        getObsList().remove(temp);
     }
     
     public String getEntry(String key) {
@@ -51,6 +63,7 @@ public class LookUpTable {
         if(obsList == null) {
             this.generateDataInMap();
         }
+        FXCollections.sort(obsList, mapComparator);
         return obsList;
     }
     
@@ -61,8 +74,8 @@ public class LookUpTable {
             Map<String, String> dataRow = new TreeMap<>();
             String value1 = item;
             String value2 = map.get(item);
-            dataRow.put("Name", value1);
-            dataRow.put("Desc", value2);
+            dataRow.put(TABLE_KEY, value1);
+            dataRow.put(TABLE_VALUE, value2);
             return dataRow; 
         }).forEach((dataRow) -> {
             obsList.add(dataRow);
@@ -70,5 +83,6 @@ public class LookUpTable {
         return obsList;
     }
     
-    
+    private final Comparator<Map> mapComparator = (Map m1, Map m2) -> ((String)m1.get(TABLE_KEY)).compareTo((String)m2.get(TABLE_KEY));
+        
 }
