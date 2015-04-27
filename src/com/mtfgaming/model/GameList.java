@@ -4,8 +4,11 @@
 package com.mtfgaming.model;
 
 import com.mtfgaming.utils.FileInputOutput;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -16,6 +19,7 @@ public class GameList {
     private static GameList gl;
     private final List<GameType> list;
     private final FileInputOutput fio;
+    private ObservableList<String> obsList;
     
     private GameList() {
         fio = new FileInputOutput();
@@ -36,11 +40,13 @@ public class GameList {
     
     public void addGame(GameType gt) {
         list.add(gt);
+        getObsList().add(gt.getName());
         this.saveGame(gt);
     }
     
     public void removeGame(GameType gt) {
         list.remove(gt);
+        getObsList().remove(gt.getName());
         fio.deleteGameTypeData(gt);
     }
     
@@ -59,6 +65,15 @@ public class GameList {
     
     public void saveGame(GameType gt) {
         fio.saveGameTypeDataToFile(gt);
+    }
+    
+    public ObservableList<String> getObsList() {
+        if(obsList == null) {
+            List<String> gameListNames = new ArrayList();
+            getGameList().stream().forEach(item -> gameListNames.add(item.getName()));
+            obsList = FXCollections.observableList(gameListNames);
+        }
+        return obsList;
     }
     
 }

@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,6 +28,7 @@ public class GameType implements Comparator<GameType> {
     private final Map<String,LookUpTable> tables = new TreeMap();
     private final Set<CharacterType> characterTypes = new HashSet();
     private final List<Character> character = new ArrayList();
+    private ObservableList<String> obsList;
     
    
     @XmlAttribute
@@ -52,11 +55,13 @@ public class GameType implements Comparator<GameType> {
         LookUpTable table = new LookUpTable();
         table.setName(name);
         tables.put(name,table);
+        getObsList().add(name);
     }
     
     public void removeTable(String name) {
         if(tables.containsKey(name)) {
             tables.remove(name);
+            getObsList().remove(name);
         }
     }
     
@@ -129,6 +134,15 @@ public class GameType implements Comparator<GameType> {
     @Override
     public int compare(GameType gt1, GameType gt2) {
         return gt1.getName().compareTo(gt2.getName());
+    }
+    
+    public ObservableList<String> getObsList() {
+        if(obsList == null) {
+            List<String> list = new ArrayList();
+            this.getTables().keySet().stream().forEach(str -> list.add(str));
+            obsList = FXCollections.observableList(list);
+        }
+        return obsList;
     }
     
     

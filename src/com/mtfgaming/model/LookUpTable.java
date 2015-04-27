@@ -5,6 +5,9 @@ package com.mtfgaming.model;
 
 import java.util.TreeMap;
 import java.util.Map;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -16,6 +19,7 @@ public class LookUpTable {
     
     private String name;
     private final Map<String,String> table = new TreeMap();
+    private ObservableList<Map> obsList;
 
     @XmlAttribute
     public String getName() {
@@ -43,7 +47,28 @@ public class LookUpTable {
         return this.table.get(key);
     }
     
+    public ObservableList<Map> getObsList() {
+        if(obsList == null) {
+            this.generateDataInMap();
+        }
+        return obsList;
+    }
     
+    private ObservableList<Map> generateDataInMap() {
+        obsList = FXCollections.observableArrayList();
+        ObservableMap<String,String> map = FXCollections.observableMap(this.getTable());
+        map.keySet().stream().map((item) -> {
+            Map<String, String> dataRow = new TreeMap<>();
+            String value1 = item;
+            String value2 = map.get(item);
+            dataRow.put("Name", value1);
+            dataRow.put("Desc", value2);
+            return dataRow; 
+        }).forEach((dataRow) -> {
+            obsList.add(dataRow);
+        });
+        return obsList;
+    }
     
     
 }
