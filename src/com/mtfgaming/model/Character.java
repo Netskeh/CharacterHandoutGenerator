@@ -27,7 +27,7 @@ public class Character {
     private final Map<String,Integer> stats = new HashMap();
     private final Set<String> talents = new TreeSet();
     private String text;
-    
+   
     
     @XmlElement
     public String getGameTypeName() {
@@ -135,7 +135,11 @@ public class Character {
     }
     
     public String getText() {
-        return getOwnText() + "\n" + characterType.getText();
+        String holder = "";
+        if (!getOwnText().isEmpty()) {
+            holder = getOwnText() + "\n";
+        }
+        return holder + characterType.getText();
     }
 
     public void setText(String text) {
