@@ -25,6 +25,9 @@ import javax.xml.bind.Unmarshaller;
  */
 public class FileInputOutput {
     
+    private final static String pathString = System.getProperty("user.dir") + "\\data\\";
+    private final static String fileType = ".xml";
+    
     public List<GameType> loadGameTypeDataFromFile() {
         List<GameType> list = new ArrayList();
         
@@ -82,7 +85,6 @@ public class FileInputOutput {
     
     
     private String getFilePath() {
-        String pathString = System.getProperty("user.dir") + "\\data\\";
         Path path = Paths.get(pathString);
         if (Files.notExists(path)) {
             try {
@@ -95,7 +97,7 @@ public class FileInputOutput {
     }
     
     private File getFilePath(String name) {
-        String filePath = this.getFilePath() + name + ".xml";
+        String filePath = this.getFilePath() + name + fileType;
         if (filePath != null) {
             return new File(filePath);
         } else {
