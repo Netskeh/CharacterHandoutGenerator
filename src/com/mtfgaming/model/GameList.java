@@ -38,10 +38,26 @@ public class GameList {
         return list;
     }
     
-    public void addGame(GameType gt) {
-        list.add(gt);
-        getObsList().add(gt.getName());
-        this.saveGame(gt);
+    public boolean addGame(GameType gt) {
+        if (!list.contains(gt)) {
+            boolean sameName = true;
+            while(sameName) {
+                sameName = false;
+                for (GameType game : list) {
+                    if (game.getName().equals(gt.getName())) {
+                        sameName = true;
+                    }
+                }
+                if (sameName) {
+                    gt.setName(gt.getName() + " - Copy");
+                }
+            }
+            list.add(gt);
+            getObsList().add(gt.getName());
+            this.saveGame(gt);
+            return true;
+        }
+        return false;
     }
     
     public void removeGame(GameType gt) {
@@ -56,11 +72,8 @@ public class GameList {
                 return gt;
             }
         }
+        System.out.println("ERROR-getgame");
         return null;
-    }
-    
-    public void saveGame(String name) {
-        fio.saveGameTypeDataToFile(this.getGame(name));
     }
     
     public void saveGame(GameType gt) {
