@@ -28,7 +28,9 @@ public class GameType implements Comparator<GameType> {
     private final Map<String,LookUpTable> tables = new TreeMap();
     private final Set<CharacterType> characterTypes = new HashSet();
     private final List<Character> character = new ArrayList();
-    private ObservableList<String> obsList;
+    private ObservableList<String> obsTableList;
+    private ObservableList<String> obsCharTypeList;
+    private ObservableList<String> obsCharList;
     
    
     @XmlAttribute
@@ -44,6 +46,7 @@ public class GameType implements Comparator<GameType> {
     public void setName(String name) {
         this.name = name;
         this.fileName = name.toLowerCase().trim().replace(' ', '_');
+        this.character.stream().forEach(c -> c.setGameType(this));
     }
     
     @XmlElement
@@ -55,21 +58,18 @@ public class GameType implements Comparator<GameType> {
         LookUpTable table = new LookUpTable();
         table.setName(name);
         tables.put(name,table);
-        getObsList().add(name);
+        getTableObsList().add(name);
     }
     
     public void removeTable(String name) {
         if(tables.containsKey(name)) {
             tables.remove(name);
-            getObsList().remove(name);
+            getTableObsList().remove(name);
         }
     }
     
     public LookUpTable getTable(String name) {
-        if(tables.containsKey(name)) {
-             return tables.get(name);
-        }
-        return null;
+        return tables.get(name);
     }
     
     public void addEntry(String table, String key, String description) {
@@ -92,11 +92,13 @@ public class GameType implements Comparator<GameType> {
     }
 
     public void addCharacterType(CharacterType ct) {
-        this.characterTypes.add(ct);     
+        this.characterTypes.add(ct); 
+        this.getCharTypeObsList().add(ct.getName());
     }
     
     public void removeCharacterType(CharacterType ct) {
         this.characterTypes.remove(ct);
+        this.getCharTypeObsList().remove(ct.getName());
     }
     
     @XmlElement
@@ -114,8 +116,9 @@ public class GameType implements Comparator<GameType> {
     }
     
     public void addCharacter(Character c) {
-        c.setGameType(this.getName());
+        c.setGameType(this);
         this.character.add(c);
+        this.getCharObsList().add(c.getName());
     }
     
     public Character getCharacter(int i) {
@@ -124,11 +127,25 @@ public class GameType implements Comparator<GameType> {
     
     public void removeCharacter(Character c) {
         this.character.remove(c);
+        this.getCharObsList().remove(c.getName());
+    }
+    
+    public void removeCharacter(String name) {
+        this.removeCharacter(this.getCharacter(name));
     }
 
     @XmlElement
     public List<Character> getCharacter() {
         return character;
+    }
+    
+    public Character getCharacter(String name) {
+        for (Character c : character) {
+            if (c.getName().equals(name)) {
+                return c;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -136,14 +153,34 @@ public class GameType implements Comparator<GameType> {
         return gt1.getName().compareTo(gt2.getName());
     }
     
-    public ObservableList<String> getObsList() {
-        if(obsList == null) {
+    public ObservableList<String> getTableObsList() {
+        if(obsTableList == null) {
             List<String> list = new ArrayList();
             this.getTables().keySet().stream().forEach(str -> list.add(str));
-            obsList = FXCollections.observableList(list);
+            obsTableList = FXCollections.observableList(list);
         }
-        FXCollections.sort(obsList);
-        return obsList;
+        FXCollections.sort(obsTableList);
+        return obsTableList;
+    }
+    
+    public ObservableList<String> getCharTypeObsList() {
+        if(obsCharTypeList == null) {
+            List<String> list = new ArrayList();
+            this.characterTypes.stream().forEach(ct -> list.add(ct.getName()));
+            obsCharTypeList = FXCollections.observableList(list);
+        }
+        FXCollections.sort(obsCharTypeList);
+        return obsCharTypeList;
+    }
+    
+    public ObservableList<String> getCharObsList() {
+        if(obsCharList == null) {
+            List<String> list = new ArrayList();
+            this.character.stream().forEach(c -> list.add(c.getName()));
+            obsCharList = FXCollections.observableList(list);
+        }
+        FXCollections.sort(obsCharList);
+        return obsCharList;
     }
     
     
