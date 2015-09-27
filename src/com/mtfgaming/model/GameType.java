@@ -96,9 +96,19 @@ public class GameType implements Comparator<GameType> {
         this.getCharTypeObsList().add(ct.getName());
     }
     
-    public void removeCharacterType(CharacterType ct) {
-        this.characterTypes.remove(ct);
-        this.getCharTypeObsList().remove(ct.getName());
+    public boolean removeCharacterType(CharacterType ct) {
+        boolean canBeDeleted = true;
+        for(Character c : character) {
+            if(c.getCharacterType().equals(ct)) {
+                canBeDeleted = false;
+                break;
+            }
+        }
+        if (canBeDeleted) {
+            this.characterTypes.remove(ct);
+            this.getCharTypeObsList().remove(ct.getName());
+        }
+        return canBeDeleted;
     }
     
     @XmlElement
@@ -115,10 +125,26 @@ public class GameType implements Comparator<GameType> {
         return null;
     }
     
-    public void addCharacter(Character c) {
-        c.setGameType(this);
-        this.character.add(c);
-        this.getCharObsList().add(c.getName());
+    public boolean addCharacter(Character c) {
+        if (!character.contains(c)) {
+            boolean sameName = true;
+            while(sameName) {
+                sameName = false;
+                for (Character ch : character) {
+                    if (ch.getName().equals(c.getName())) {
+                        sameName = true;
+                    }
+                }
+                if (sameName) {
+                    c.setName(c.getName() + " - Copy");
+                }
+            }
+            c.setGameType(this);
+            this.character.add(c);
+            this.getCharObsList().add(c.getName());
+            return true;
+        }
+        return false;
     }
     
     public Character getCharacter(int i) {
